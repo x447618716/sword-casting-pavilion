@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>铸就绝世宝剑</title>
+	<script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+        }
+        .clearfix:before, .clearfix:after { content: ""; display: table; font-size:0 !important; line-height:0!important; height:0!important;}
+        .clearfix:after { clear: both; }
+        .header{
+            width: 1368px;
+            height: 154px;
+            margin: 0 auto;
+            background:url("./img/head.png") no-repeat center;
+            background-size: 100% 100%;
+        }
+        .ware{
+            width: 900px;
+            margin: 30px auto 0 auto;
+        }
+        .side_left{
+            width: 221px;
+            margin-right: 20px;
+            float: left;
+        }
+        .text{
+            font-size: 12px;
+            color: #666666;
+            font-family: "宋体";
+            line-height: 32px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .myCanvas{
+            position: relative;
+            width: 221px;
+            height:415px;
+            background:#4d4d4d;
+        }
+        .myCanvas2{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        .side_right{
+            position: relative;
+            width: 659px;
+            float: left;
+        }
+        .checkbox{
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+
+        .flex-container-row {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            border: 1px solid #d0d0d0;
+            font-family: '宋体';
+            font-size: 12px;
+            color: #666666;
+        }
+        .flex-container-column {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+        }
+        .item7{
+            -webkit-flex: 7;
+            flex: 7;
+            height: 38px;
+            line-height: 38px;
+            text-align: center;
+        }
+        .item3{
+            -webkit-flex: 3;
+            flex: 3;
+            height: 38px;
+            line-height: 38px;
+            text-align: center;
+            border-right:1px solid #d0d0d0;
+        }
+        .head{
+            font-family: '微软雅黑';
+            font-size: 14px;
+            color: #333333;
+        }
+        .flex-item-color {
+            background-color: #ffffff;
+        }
+        .flex-item-color2 {
+            background-color: #f3f2f2;
+        }
+        input[type=file]{
+            display: none;
+        }
+        .btn{
+            width: 98px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            display: inline-block;
+            color: white;
+            font-size: 14px;
+            font-family: '微软雅黑';
+            background-color:#4d4d4d;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .reset{
+            height: 33px;
+            line-height: 33px;
+            background-color:#ffffff;
+            border: 1px solid #999999;
+            color: #666666;
+            margin-left: 20px;
+        }
+        .delete{
+            margin-right:10px ;
+            width: 20px;
+            height: 20px;
+            background: url("./img/del.png") no-repeat center;
+            -webkit-align-self: center;
+            align-self: center;
+            outline: none;
+            border: none;
+        }
+        .position{
+            display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+        }
+        .checkbox1{
+            margin-left: 10px;
+            -webkit-align-self: center;
+            align-self: center;
+        }
+        .item3 input[type=checkbox]:checked{
+            appearance:none;
+            -moz-appearance:none;
+            -webkit-appearance:none;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #cccccc;
+            padding: 1px;
+            outline: 1px solid #cccccc;
+        }
+        .background1{
+            background-color: #371a07;
+        }
+        .background2{
+            background-color: #024dff;
+        }
+        .background3{
+            background-color: #61bdff;
+        }
+        .background4{
+            background-color: #ff0000;
+        }
+        .background5{
+            background-color: #6ccf12;
+        }
+        .background6{
+            background-color: #7030a1;
+        }
+        .background7{
+            background-color: #7effff;
+        }
+        .background8{
+            background-color: #f7789b;
+        }
+        .color{
+            color: red;
+
+        }
+        .fixed{
+            position: fixed;
+            width:30%;
+            height: 100%;
+            left:35% ;
+            top: 0;
+            z-index: 9999;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+ <div class="header"></div>
+ <div class="ware clearfix">
+     <div class="side_left">
+         <a href="#" class="text big">点击图片查看大图</a>
+         <div id="myCanvas" class="myCanvas">
+             <div id="myCanvas2" class="myCanvas2"></div>
+         </div>
+     </div>
+     <div class="side_right">
+         <div class="text"><input id="init" type="checkbox" style="vertical-align: middle; margin-right: 5px;">显示范围色块</div>
+         <div class="text"><input id="init2" type="checkbox" style="vertical-align: middle; margin-right: 5px;">显示内置套件</div>
+         <div class="flex-container-column">
+             <div class="flex-container-row flex-item-color2">
+                 <div class=" item3 head">部件</div><div class=" item7 head">路径</div>
+             </div>
+             <div class="flex-container-row flex-item-color">
+                 <div class=" item3 "><input type="checkbox" class="checkbox background6">剑穗</div><div class=" item7 position"><input type="checkbox" class="checkbox1"><label  for="7">将图片移动到此处，或点击浏览上传</label> <input type="file" id="7" ><button class="delete"></button></div>
+             </div>
+             <div class="flex-container-row flex-item-color">
+                 <div class=" item3 "><input type="checkbox" class="checkbox background3">剑身</div><div class=" item7 position"><input type="checkbox" class="checkbox1"><label  for="3">将图片移动到此处，或点击浏览上传</label> <input type="file" id="3" ><button class="delete"></button></div>
+             </div>
+             <div class="flex-container-row flex-item-color2">
+                 <div class=" item3 "><input type="checkbox" class="checkbox background2">剑刃</div><div class=" item7 position"><input type="checkbox" class="checkbox1"><label  for="2">将图片移动到此处，或点击浏览上传</label> <input type="file" id="2" ><button class="delete"></button></div>
+             </div>
+             <div class="flex-container-row flex-item-color2">
+                 <div class=" item3 "><input type="checkbox" class="checkbox background4">雕纹</div><div class=" item7 position"><input type="checkbox" class="checkbox1"><label  for="4">将图片移动到此处，或点击浏览上传</label> <input type="file" id="4" ><button class="delete"></button></div>
+             </div>
+             <div class="flex-container-row flex-item-color">
+                 <div class=" item3 "><input type="checkbox" class="checkbox background1">剑柄</div><div class="item7 position"><input type="checkbox" class="checkbox1"><label for="1">将图片移动到此处，或点击浏览上传</label> <input type="file" id="1" ><button class="delete"></button></div>
+             </div>
+             <div class="flex-container-row flex-item-color">
+                 <div class=" item3 "><input type="checkbox" class="checkbox background7">手托</div><div class=" item7 position"><input type="checkbox" class="checkbox1"><label  for="5">将图片移动到此处，或点击浏览上传</label> <input type="file" id="5" ><button class="delete"></button></div>
+             </div>
+             <div class="flex-container-row flex-item-color2">
+                 <div class=" item3 "><input type="checkbox" class="checkbox background5">兽头</div><div class=" item7 position"><input type="checkbox" class="checkbox1"><label  for="6">将图片移动到此处，或点击浏览上传</label> <input type="file" id="6" ><button class="delete"></button></div>
+             </div>
+
+             <div class="flex-container-row flex-item-color2">
+                 <div class=" item3 "><input type="checkbox" class="checkbox background8">剑气</div><div class=" item7 position"><input type="checkbox" class="checkbox1"><label  for="8">将图片移动到此处，或点击浏览上传</label> <input type="file" id="8" ><button class="delete"></button></div>
+             </div>
+         </div>
+         <a href="#" class="btn" id="baocuntupian">导出PNG</a>
+         <a href="#" class="btn reset" id="reset">重做</a>
+     </div>
+ </div>
+ <div id="big" class="fixed"></div>
+<script type="text/javascript">
+	(function(){
+
+	    //内置武器
+	    var data=[
+            './img2/15.png',
+            './img2/11.png',
+            './img2/10.png',
+            './img2/12.png',
+            './img2/9.png',
+            './img2/13.png',
+            './img2/14.png',
+            './img2/16.png',
+        ];
+
+        //武器范围色块
+        var init=[
+            {url:'./img2/6.png'},
+            {url:'./img2/2.png'},
+            {url:'./img2/3.png'},
+            {url:'./img2/4.png'},
+            {url:'./img2/5.png'},
+            {url:'./img2/6.png'},
+            {url:'./img2/7.png'},
+            {url:'./img2/6.png'},
+        ];
+
+        //范围色块过度对象
+        var data2,data3=[
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+        ];
+
+        //用户数据
+        var data5=[
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+            {url:''},
+        ];
+
+        //内置套件过度对象
+        var data6;
+
+        //创建画布1(范围色画布)
+        var myCanvasObj = new myCanvas({
+            regionId : 'myCanvas',
+            width : 221,
+            height : 415
+        });
+
+        //创建画布2(内置套件及用户套件画布)
+        var myCanvasObj2 = new myCanvas({
+            regionId : 'myCanvas2',
+            width : 221,
+            height : 415
+        });
+
+	    //初始化
+        function _init(){
+            $("#init").prop("checked",true);
+            $("#init2").prop("checked",true);
+            //画布1
+            var images1 = new Array()
+            for ( var i = 0; i < init.length; i++) {
+                images1[i] = new Image();
+                images1[i].src = init[i].url;
+                if(i==init.length-1){
+                    images1[i].onload=function () {
+                        myCanvasObj.createCanvas([
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                        ], [
+                            {url:init[1].url},
+                            {url:init[2].url},
+                            {url:init[3].url},
+                            {url:init[4].url},
+                            {url:init[6].url},
+                        ]);
+                        //设置checkbox为选中状态
+                        $(".checkbox").eq(1).prop("checked",true);
+                        $(".checkbox").eq(2).prop("checked",true);
+                        $(".checkbox").eq(3).prop("checked",true);
+                        $(".checkbox").eq(4).prop("checked",true);
+                        $(".checkbox").eq(6).prop("checked",true);
+
+                        //加载色块相关事件
+                        data2=JSON.parse(JSON.stringify(init));
+                        color_lump();
+                        color_lump_checkbox();
+
+                    }
+                }
+            }
+
+            //画布2
+            var images = new Array()
+            for ( var i = 0; i < data.length; i++) {
+                images[i] = new Image();
+                images[i].src = data[i];
+                if(i==data.length-1){
+                    images[i].onload=function () {
+                        myCanvasObj2.createCanvas([
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                        ], [
+                            {url:data[0]!=undefined?data[0]:''},
+                            {url:data[1]!=undefined?data[1]:''},
+                            {url:data[2]!=undefined?data[2]:''},
+                            {url:data[3]!=undefined?data[3]:''},
+                            {url:data[4]!=undefined?data[4]:''},
+                            {url:data[5]!=undefined?data[5]:''},
+                            {url:data[6]!=undefined?data[6]:''},
+                            {url:data[7]!=undefined?data[7]:''},
+                        ]);
+                        //设置checkbox为选中状态
+                        $(".checkbox1").eq(0).prop("checked",true);
+                        $(".checkbox1").eq(1).prop("checked",true);
+                        $(".checkbox1").eq(2).prop("checked",true);
+                        $(".checkbox1").eq(3).prop("checked",true);
+                        $(".checkbox1").eq(4).prop("checked",true);
+                        $(".checkbox1").eq(5).prop("checked",true);
+                        $(".checkbox1").eq(6).prop("checked",true);
+                        $(".checkbox1").eq(7).prop("checked",true);
+
+                        //加载内置套件及用户套件事件
+                        data6=JSON.parse(JSON.stringify(data));//用于用户自定义套件
+                        internal();
+                        internal_checkbox();
+                        select();
+                        Delete();
+                        reset();
+                        dropbox();
+                    }
+                }
+            }
+        }
+
+        _init();
+
+	    //选择图片
+        function select() {
+            $("input[type=file]").each(function(index,el){
+                $("input[type=file]").eq(index).change(function () {
+                    var file=this.files[0];
+                    if(!!file) {
+                        var reader = new FileReader();
+                        $("label").eq(index).text(file.name);
+                        // 图片文件转换为base64
+                        reader.readAsDataURL(file);
+                        reader.onload = function () {
+                            var image = new Image();
+                            image.src= this.result;
+                            image.onload = function () {
+                                var width = image.width;
+                                var height = image.height;
+                                if(width!=800||height!=1500){
+                                    $("label").eq(index).text("请上传800*1500的图片！");
+                                    $("label").eq(index).addClass("color");
+                                    return false;
+                                }
+                                $("label").eq(index).removeClass('color');
+                                // 显示图片
+                                if($(".checkbox1").eq(index).is(":checked")){
+                                    data6[index]= this.src;
+                                    data5[index].url=this.src;
+                                    myCanvasObj2.createCanvas([
+                                        {x:0, y:0, w:221, h:415},
+                                        {x:0, y:0, w:221, h:415},
+                                        {x:0, y:0, w:221, h:415},
+                                        {x:0, y:0, w:221, h:415},
+                                        {x:0, y:0, w:221, h:415},
+                                        {x:0, y:0, w:221, h:415},
+                                        {x:0, y:0, w:221, h:415},
+                                        {x:0, y:0, w:221, h:415},
+                                    ], [
+                                        {url:data6[0]!=undefined?data6[0]:''},
+                                        {url:data6[1]!=undefined?data6[1]:''},
+                                        {url:data6[2]!=undefined?data6[2]:''},
+                                        {url:data6[3]!=undefined?data6[3]:''},
+                                        {url:data6[4]!=undefined?data6[4]:''},
+                                        {url:data6[5]!=undefined?data6[5]:''},
+                                        {url:data6[6]!=undefined?data6[6]:''},
+                                        {url:data6[7]!=undefined?data6[7]:''},
+                                    ]);
+                                }else{
+                                    data5[index].url=this.src;
+                                }
+                            };
+                        }
+                    }
+                })
+            });
+        }
+
+         //文件拖拽
+        function dropbox() {
+            $(".position").each(function (index,el) {
+                var dropbox = document.getElementsByClassName("position")[index];
+                    dropbox.addEventListener("dragenter", function(e){
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }, false);
+
+                    dropbox.addEventListener("dragover", function(e){
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }, false);
+
+                    dropbox.addEventListener("drop", function(e){
+                        e.stopPropagation();
+                        e.preventDefault();
+
+                        var dt = e.dataTransfer;
+                        var files = dt.files;
+
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+                            var imageType = /^image\//;
+
+                            if ( !imageType.test(file.type) ) {
+                                continue;
+                            }
+
+                            var reader = new FileReader();
+                            $("label").eq(index).text(file.name);
+                            // 图片文件转换为base64
+                            reader.readAsDataURL(file);
+                            reader.onload = function () {
+                                var image = new Image();
+                                image.src= this.result;
+                                image.onload = function () {
+                                    var width = image.width;
+                                    var height = image.height;
+                                    if(width!=800||height!=1500){
+                                        $("label").eq(index).text("请上传800*1500的图片！");
+                                        $("label").eq(index).addClass("color");
+                                        return false;
+                                    }
+                                    $("label").eq(index).removeClass('color');
+                                    // 显示图片
+                                    if($(".checkbox1").eq(index).is(":checked")){
+                                        data6[index]= this.src;
+                                        data5[index].url=this.src;
+                                        myCanvasObj2.createCanvas([
+                                            {x:0, y:0, w:221, h:415},
+                                            {x:0, y:0, w:221, h:415},
+                                            {x:0, y:0, w:221, h:415},
+                                            {x:0, y:0, w:221, h:415},
+                                            {x:0, y:0, w:221, h:415},
+                                            {x:0, y:0, w:221, h:415},
+                                            {x:0, y:0, w:221, h:415},
+                                            {x:0, y:0, w:221, h:415},
+                                        ], [
+                                            {url:data6[0]!=undefined?data6[0]:''},
+                                            {url:data6[1]!=undefined?data6[1]:''},
+                                            {url:data6[2]!=undefined?data6[2]:''},
+                                            {url:data6[3]!=undefined?data6[3]:''},
+                                            {url:data6[4]!=undefined?data6[4]:''},
+                                            {url:data6[5]!=undefined?data6[5]:''},
+                                            {url:data6[6]!=undefined?data6[6]:''},
+                                            {url:data6[7]!=undefined?data6[7]:''},
+                                        ]);
+                                    }else{
+                                        data5[index].url=this.src;
+                                    }
+                                    //console.log(data6,"data6")
+                                };
+                            }
+                        }
+                    }, false);
+            })
+        }
+
+         //删除
+        function Delete() {
+            $(".delete").each(function (index,el) {
+                $(".delete").eq(index).click(function () {
+                    $("input[type=file]").eq(index).val("");
+                    $("label").eq(index).text("将图片移动到此处，或点击浏览上传");
+                    $("label").eq(index).removeClass('color');
+                    data5[index].url='';
+                    for(var i=0;i<data5.length;i++){
+                        if($(".checkbox1").eq(i).is(":checked")){
+                            if(data5[i].url==''){
+                                data6[index]=data[index];
+                            }else{
+                                data6[index]= data5[index].url;
+                            }
+                        }
+                    }
+                    myCanvasObj2.createCanvas([
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                    ], [
+                        {url:data6[0]!=undefined?data6[0]:''},
+                        {url:data6[1]!=undefined?data6[1]:''},
+                        {url:data6[2]!=undefined?data6[2]:''},
+                        {url:data6[3]!=undefined?data6[3]:''},
+                        {url:data6[4]!=undefined?data6[4]:''},
+                        {url:data6[5]!=undefined?data6[5]:''},
+                        {url:data6[6]!=undefined?data6[6]:''},
+                        {url:data6[7]!=undefined?data6[7]:''},
+                    ]);
+                })
+            });
+        }
+
+         //重做
+        function reset() {
+            $("#reset").click(function () {
+                window.location.reload();
+            });
+        }
+         //查看大图
+         $(".big").click(function () {
+             $("#big").show();
+             var width= $("#big").width();
+             var height= $("#big").height();
+             var myCanvasObj3 = new myCanvas({
+                 regionId : 'big',
+                 width : width,
+                 height : height
+             });
+             //console.log(data6);
+              myCanvasObj3.scale(data6);
+         });
+         $("#big").click(function () {
+             $("#big canvas").remove();
+             $("#big").hide();
+         })
+
+		//3.0 将图片保存到本地
+		var savaFile=function(data,filename){
+			var save_link=document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+			save_link.href=data;
+			save_link.download=filename;
+			var event=document.createEvent('MouseEvents');
+			event.initMouseEvent('click',true,false,window,0,0,0,0,0,false,false,false,false,0,null);
+			save_link.dispatchEvent(event);
+		};
+
+
+       //是否显示范围色块
+        function color_lump() {
+            $("#init").on("click",function () {
+                if($("#init").is(":checked")){
+                    myCanvasObj.createCanvas([
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                    ], [
+                        {url:init[1].url},
+                        {url:init[2].url},
+                        {url:init[3].url},
+                        {url:init[4].url},
+                        {url:init[6].url},
+                    ]);
+                    //设置checkbox为选中状态
+                    $(".checkbox").eq(1).prop("checked",true);
+                    $(".checkbox").eq(2).prop("checked",true);
+                    $(".checkbox").eq(3).prop("checked",true);
+                    $(".checkbox").eq(4).prop("checked",true);
+                    $(".checkbox").eq(6).prop("checked",true);
+                    //还原数据
+                    data2=JSON.parse(JSON.stringify(init));
+                    for (var key in data3) {
+                        data3[key].url='';
+                    }
+                }else{
+                    myCanvasObj.createCanvas([
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                    ], [
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                    ]);
+                    //设置checkbox为不选中状态
+                    $(".checkbox").eq(0).prop("checked",false);
+                    $(".checkbox").eq(1).prop("checked",false);
+                    $(".checkbox").eq(2).prop("checked",false);
+                    $(".checkbox").eq(3).prop("checked",false);
+                    $(".checkbox").eq(4).prop("checked",false);
+                    $(".checkbox").eq(5).prop("checked",false);
+                    $(".checkbox").eq(6).prop("checked",false);
+                    $(".checkbox").eq(7).prop("checked",false);
+                    //还原数据
+                    data2=JSON.parse(JSON.stringify(init));
+                    for (var key in data3) {
+                        data3[key].url='';
+                    }
+                }
+            });
+        }
+
+        //范围色块复选框
+        function color_lump_checkbox() {
+            $(".checkbox").each(function (index,el) {
+                $(".checkbox").eq(index).click(function () {
+                    if($("#init").is(":checked")){
+                        //默认显示范围色块
+                        if($(".checkbox").eq(index).is(":checked")){
+                            data2[index].url=init[index].url;
+                            myCanvasObj.createCanvas([
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                            ], [
+                                {url:data2[1].url},
+                                {url:data2[2].url},
+                                {url:data2[3].url},
+                                {url:data2[4].url},
+                                {url:data2[6].url},
+                            ]);
+                        }else{
+                            data2[index].url="";
+                            myCanvasObj.createCanvas([
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                            ], [
+                                {url:data2[1].url},
+                                {url:data2[2].url},
+                                {url:data2[3].url},
+                                {url:data2[4].url},
+                                {url:data2[6].url},
+                            ]);
+                        }
+                       // console.log(data2,"data2");
+                    }else{
+                        //默认不显示范围色块
+                        if($(".checkbox").eq(index).is(":checked")){
+                            data3[index].url= init[index].url;
+                            myCanvasObj.createCanvas([
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                            ], [
+                                {url:data3[1].url},
+                                {url:data3[2].url},
+                                {url:data3[3].url},
+                                {url:data3[4].url},
+                                {url:data3[6].url},
+                            ]);
+                        }else{
+                            data3[index].url='';
+                            myCanvasObj.createCanvas([
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                                {x:0, y:0, w:221, h:415},
+                            ], [
+                                {url:data3[1].url},
+                                {url:data3[2].url},
+                                {url:data3[3].url},
+                                {url:data3[4].url},
+                                {url:data3[6].url},
+                            ]);
+                        }
+                    }
+                })
+            });
+        }
+        
+        //是否显示内置套件
+        function  internal() {
+            $("#init2").on("click",function () {
+                if($("#init2").is(":checked")){
+                    for(var i=0;i<data5.length;i++){
+                        if(data5[i].url==''){
+                            data6[i]=data[i];
+                        }else{
+                            data6[i]= data5[i].url;
+                        }
+                    }
+                    myCanvasObj2.createCanvas([
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                    ], [
+                        {url:data6[0]!=undefined?data6[0]:''},
+                        {url:data6[1]!=undefined?data6[1]:''},
+                        {url:data6[2]!=undefined?data6[2]:''},
+                        {url:data6[3]!=undefined?data6[3]:''},
+                        {url:data6[4]!=undefined?data6[4]:''},
+                        {url:data6[5]!=undefined?data6[5]:''},
+                        {url:data6[6]!=undefined?data6[6]:''},
+                        {url:data6[7]!=undefined?data6[7]:''},
+                    ]);
+                    //设置checkbox为选中状态
+                    $(".checkbox1").eq(0).prop("checked",true);
+                    $(".checkbox1").eq(1).prop("checked",true);
+                    $(".checkbox1").eq(2).prop("checked",true);
+                    $(".checkbox1").eq(3).prop("checked",true);
+                    $(".checkbox1").eq(4).prop("checked",true);
+                    $(".checkbox1").eq(5).prop("checked",true);
+                    $(".checkbox1").eq(6).prop("checked",true);
+                    $(".checkbox1").eq(7).prop("checked",true);
+                    //还原数据
+                    data6=JSON.parse(JSON.stringify(data));
+                }else{
+                    myCanvasObj2.createCanvas([
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                        {x:0, y:0, w:221, h:415},
+                    ], [
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                        {url:''},
+                    ]);
+                    //设置checkbox为不选中状态
+                    $(".checkbox1").eq(0).prop("checked",false);
+                    $(".checkbox1").eq(1).prop("checked",false);
+                    $(".checkbox1").eq(2).prop("checked",false);
+                    $(".checkbox1").eq(3).prop("checked",false);
+                    $(".checkbox1").eq(4).prop("checked",false);
+                    $(".checkbox1").eq(5).prop("checked",false);
+                    $(".checkbox1").eq(6).prop("checked",false);
+                    $(".checkbox1").eq(7).prop("checked",false);
+                    //还原数据
+                    for (var key in data6) {
+                        data6[key]='';
+                    }
+                }
+            });
+        }
+
+        //内置套件复选框
+        function  internal_checkbox() {
+            $(".checkbox1").each(function (index,el) {
+                $(".checkbox1").eq(index).click(function () {
+
+                    if($(".checkbox1").eq(index).is(":checked")){
+                        if(data5[index].url==''){
+                            data6[index]=data[index];
+                        }else{
+                            data6[index]= data5[index].url;
+                        }
+                        myCanvasObj2.createCanvas([
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                        ], [
+                            {url:data6[0]},
+                            {url:data6[1]},
+                            {url:data6[2]},
+                            {url:data6[3]},
+                            {url:data6[4]},
+                            {url:data6[5]},
+                            {url:data6[6]},
+                            {url:data6[7]},
+                        ]);
+                    }else{
+                        data6[index]="";
+                        myCanvasObj2.createCanvas([
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                            {x:0, y:0, w:221, h:415},
+                        ], [
+                            {url:data6[0]},
+                            {url:data6[1]},
+                            {url:data6[2]},
+                            {url:data6[3]},
+                            {url:data6[4]},
+                            {url:data6[5]},
+                            {url:data6[6]},
+                            {url:data6[7]},
+                        ]);
+                    }
+                })
+            });
+        }
+
+
+        //时间格式化
+        Date.prototype.format = function(fmt) {
+            var o = {
+                "M+" : this.getMonth()+1,                 //月份
+                "d+" : this.getDate(),                    //日
+                "h+" : this.getHours(),                   //小时
+                "m+" : this.getMinutes(),                 //分
+                "s+" : this.getSeconds(),                 //秒
+                "q+" : Math.floor((this.getMonth()+3)/3), //季度
+                "S"  : this.getMilliseconds()             //毫秒
+            };
+            if(/(y+)/.test(fmt)) {
+                fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+            }
+            for(var k in o) {
+                if(new RegExp("("+ k +")").test(fmt)){
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                }
+            }
+            return fmt;
+        };
+
+        //导出图片
+		document.getElementById('baocuntupian').onclick = function(){
+			var aa = myCanvasObj2.saveImg();
+            var time = new Date().format("yyyyMMddhhmmss");
+			var filename = time+'.png';
+			//注意咯,直接用当前时间做的图片名字
+			savaFile(aa,filename);
+		};
+	})();
+
+	function myCanvas(initialParam){
+        "use strict";
+		this.param = {
+			regionId : initialParam.regionId || '',
+			width : initialParam.width || 1024,
+			height : initialParam.height || 1024
+		};
+		this._init = function(){
+			// 处理定位点
+			this.regionObj = function(parmTemp){
+				if(parmTemp.regionId){
+					return document.getElementById(parmTemp.regionId);
+				}else{
+					var r = document.createElement('div');
+					document.getElementsByTagName('body')[0].appendChild(r);
+					return r;
+				}
+			}(this.param);
+
+			// 处理canvas
+			this.canvasObj = function(parmTemp){
+				var c = document.createElement('canvas');
+				c.setAttribute('width', parmTemp.width);
+				c.setAttribute('height', parmTemp.height);
+				return c;
+			}(this.param);
+		};
+		this._init();
+
+		// 画图+重绘
+		this.createCanvas = function(coordList, imgUrls){
+			var cxt = this.canvasObj.getContext("2d");
+			cxt.fillStyle="transparent";
+			for(var i = 0; i < imgUrls.length; i++){
+				(function(i){
+                    cxt.clearRect(coordList[i].x, coordList[i].y, coordList[i].w, coordList[i].h);
+					cxt.fillRect(coordList[i].x, coordList[i].y, coordList[i].w, coordList[i].h);
+					var img = new Image();
+					img.src = imgUrls[i].url;
+					img.onload = function(){
+						cxt.drawImage(img, coordList[i].x, coordList[i].y,coordList[i].w, coordList[i].h);
+					};
+				})(i);
+			}
+			this.regionObj.appendChild(this.canvasObj);
+		};
+
+        this.scale=function (imgdata) {
+            var cxt = this.canvasObj.getContext("2d");
+            cxt.fillStyle="#4d4d4d";
+            for(var i = 0; i < imgdata.length; i++){
+                (function(i){
+                    cxt.fillRect(0, 0, initialParam.width, initialParam.height);
+                    var img = new Image();
+                    img.src = imgdata[i];
+                    img.onload = function(){
+                        cxt.drawImage(img,0,0,initialParam.width,initialParam.height);
+                    };
+                })(i);
+            }
+            this.regionObj.appendChild(this.canvasObj);
+        };
+
+		this.saveImg = function(){
+			return this.canvasObj.toDataURL("image/png");
+		};
+	};
+</script>
+</body>
+</html>
